@@ -1,4 +1,4 @@
-http://dev.mesu.softservetest.com/
+https://mooc4ua.online/
 https://mstfs.softserveinc.com/tfs/CoE-Solutions/MeSU/_git/mesu-fe
 https://opentech.softserveinc.com/en/projects/service-for-online-learning
 
