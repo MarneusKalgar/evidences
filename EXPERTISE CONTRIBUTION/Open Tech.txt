@@ -1,0 +1,8 @@
+http://dev.mesu.softservetest.com/
+https://mstfs.softserveinc.com/tfs/CoE-Solutions/MeSU/_git/mesu-fe
+https://opentech.softserveinc.com/en/projects/service-for-online-learning
+
+https://mist-next.vercel.app/
+https://github.com/katezolotarova/mist-next
+https://github.com/katezolotarova/mist-strapi
+https://opentech.softserveinc.com/uk/projects/a-website-for-the-national-museum-of-the-history-of-ukraine

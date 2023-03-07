@@ -1,0 +1,85 @@
+variables:
+  - name: FRONTEND_IMAGE_NAME
+    value: "frontend-$(Build.SourceBranchName):$(Build.BuildNumber)"
+  - name: FRONTEND_CONTAINER_NAME
+    value: "frontend-$(Build.SourceBranchName)-$(Build.BuildID)"
+
+resources:
+  repositories:
+    - repository: mesu-infra
+      type: git
+      name: mesu-infra
+      ref: refs/heads/main
+
+trigger:
+- develop
+- devops
+
+pool: "MeSU-Agent-Pool"
+
+stages:
+- stage: configure_agent
+  jobs:
+    - template: pipelines/templates/configure_agent.yml@mesu-infra
+
+- stage: build_frontend
+  jobs:
+    - template: pipelines/templates/build_container.yml@mesu-infra
+      parameters:
+        dockerFile: '**/Dockerfile.prod'
+        containerImageName: $(FRONTEND_IMAGE_NAME)
+
+- stage: run_frontend
+  dependsOn: build_frontend
+  jobs:
+  - job: run_frontend_container
+    steps:
+      - bash: |
+          docker run -p 3333:3000 \
+          -d --name $(FRONTEND_CONTAINER_NAME) $(FRONTEND_IMAGE_NAME)
+        displayName: run_frontend_container
+
+- stage: test_frontend
+  dependsOn: run_frontend
+  jobs:
+  - job: smoke_testing
+    steps:
+      - bash: |
+            max_retries=10
+            n=0
+            until [ "$n" -ge "$max_retries" ]
+            do
+              STATUSCODE=$(curl -f -s -i --retry-connrefused -o /dev/null -w "%{http_code}" http://localhost:3333/)
+              n=$((n+1)) 
+              if test $STATUSCODE -eq 200; 
+              then
+                echo "Test successful with status code - $STATUSCODE"
+                exit 0
+              else
+                echo "Connection failed with code - $STATUSCODE"
+                echo "Retrying..."
+                sleep 5
+              fi
+            done
+            echo "Test failed after $n attemps with code - $STATUSCODE"
+            exit 1
+        displayName: test_react_app
+
+  - job: docker_cleanup
+    dependsOn: smoke_testing
+    steps:
+      - bash: |
+          docker stop $(FRONTEND_CONTAINER_NAME)
+        displayName: stop_pipeline_container
+
+- stage: package_artifacts
+  dependsOn: test_frontend
+  jobs:
+    - template: pipelines/templates/package_artifacts.yml@mesu-infra
+      parameters:
+        sourceDir: $(Build.SourcesDirectory)
+        artifactDir: $(Build.ArtifactStagingDirectory)
+        imageName: $(FRONTEND_IMAGE_NAME)
+        codeArtifactName: frontend-code
+        imageArtifactName: frontend-image
+        imageArtifactFile: frontend-image.tar

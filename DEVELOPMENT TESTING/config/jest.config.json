@@ -1,0 +1,21 @@
+{
+    "name": "mixcart-client",
+    "displayName": "mixcart-client",
+    "testMatch": [
+        "<rootDir>/**/*.test.js"
+    ],
+    "testPathIgnorePatterns": [
+        "node_modules"
+    ],
+    "moduleFileExtensions": [
+        "js",
+        "vue"
+    ],
+    "transform": {
+        "^.+\\.js$": "babel-jest",
+        ".*\\.vue$": "../node_modules/vue-jest"
+    },
+    "modulePathIgnorePatterns": [
+        "/*.spec.js"
+    ]
+}

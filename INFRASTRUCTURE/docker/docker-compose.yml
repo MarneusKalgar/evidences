@@ -1,0 +1,13 @@
+version: "3"
+services:
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - WDS_SOCKET_PORT=0
+    ports:
+      - "3000:3000"
+    volumes:
+      - /app/node_modules
+      - .:/app

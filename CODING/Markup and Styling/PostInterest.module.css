@@ -1,0 +1,33 @@
+.titleWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.linkText {
+  text-transform: uppercase;
+}
+
+.list {
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.item {
+  flex: 1 0 calc(33% - 14px);
+}
+
+@media screen and (max-width: 576px) {
+  .list {
+    flex-direction: column;
+  }
+}

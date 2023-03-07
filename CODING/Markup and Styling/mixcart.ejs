@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <script src="<%- getBundle('environment-setup.js') %>"></script>
+
+    <!-- Runtime Environment Variable Injection -->
+    <script>
+      window.ENV.APP_URL = "<%- env_app_url %>"
+      window.ENV.SEGMENT_WRITE_KEY = "<%- segment_write_key %>"
+    </script>
+
+    <meta charset="utf-8" />
+    <meta name="description" content="<% if (page_description) {%><%- page_description %><% } %>">
+    <% if (pathname.includes("/search")) { %><meta name="robots" content="noindex,follow"/><% } %>
+    <meta property="og:title" content="<% if (page_title) {%><%- page_title %><% } %>">
+    <meta property="og:image" content="<% if (page_image) {%><%- page_image %><% } %>">
+    <meta property="og:description" content="<% if (page_description) {%><%- page_description %><% } %>">
+    <meta property="og:type" content="website" />
+    <meta name="twitter:title" content="<% if (page_title) {%><%- page_title %><% } %>">
+    <meta name="twitter:description" content="<% if (page_description) {%><%- page_description %><% } %>">
+    <meta name="twitter:image" content="<% if (page_image) {%><%- page_image %><% } %>">
+    <meta name="twitter:site" content="@gopuff">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Gopuff">
+    <meta name="mobile-web-app-title" content="Gopuff">
+    <meta name="theme-color" content="#00A4FF">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="google-site-verification" content="-ZQfE77vJ1Y9rOMhfGwxR4ZAWj0ukTq4HRJCjCk1Tak" />
+    <meta name="apple-itunes-app" content="app-id=722804810" />
+    <meta name="csrf-token" content="<% if (csrfToken) {%><%- csrfToken %><% } %>">
+    <% if (canonical && canonical != 'https://gopuff.com/') { %>
+      <link rel="canonical" href="<%- canonical; %>" />
+    <% } else if (canonical) { %>
+      <link rel="canonical" href="<%- canonical; %>" />
+    <% } %>
+    <% if (page_title) {%><title><%- page_title %></title><% } %>
+    <link rel="manifest" href="/mixpublic/manifest.json">
+    <link rel="apple-touch-startup-image" href="https://gopuff.cdn.imgeng.in/mixcart/images/splash.png">
+    <link rel="apple-touch-icon-precomposed" href="https://gopuff.cdn.imgeng.in/mixcart/images/gopuff_icon-precomposed.png">
+    <link href="https://gopuff.cdn.imgeng.in/mixcart/images/splash.png" sizes="2048x2732" rel="apple-touch-startup-image" />
+    <link href="https://gopuff.cdn.imgeng.in/mixcart/images/splash.png" sizes="1668x2224" rel="apple-touch-startup-image" />
+    <link href="https://gopuff.cdn.imgeng.in/mixcart/images/splash.png" sizes="1536x2048" rel="apple-touch-startup-image" />
+    <link href="https://gopuff.cdn.imgeng.in/mixcart/images/splash.png" sizes="1125x2436" rel="apple-touch-startup-image" />
+    <link href="https://gopuff.cdn.imgeng.in/mixcart/images/splash.png" sizes="1242x2208" rel="apple-touch-startup-image" />
+    <link href="https://gopuff.cdn.imgeng.in/mixcart/images/splash.png" sizes="750x1334"  rel="apple-touch-startup-image" />
+    <link href="https://gopuff.cdn.imgeng.in/mixcart/images/splash.png" sizes="640x1136"  rel="apple-touch-startup-image" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://publicassets.gopuff.com">
+    <link rel="preconnect" href="https://az416426.vo.msecnd.net">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,700,900&display=swap" as="style" crossorigin>
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,700,900&display=swap"></noscript>
+
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/js-xss/0.3.3/xss.min.js"></script>
+
+    <script>
+      window.splitExperimentFlags = JSON.parse(`<%- JSON.stringify(splitFlags); %>`);
+      window.splitExperimentFlagsConfig = JSON.parse(`<%- JSON.stringify(splitConfigs) %>`);
+      window.pointOfSale = JSON.parse(`"<%- pointOfSale %>"`);
+      window.currencyCode = JSON.parse(`"<%- currencyCode %>"`);
+      window.ipDefaultPointOfSale = JSON.parse(`"<%- ipDefaultPointOfSale %>"`);
+      window.ipDefaultCurrencyCode = JSON.parse(`"<%- ipDefaultCurrencyCode %>"`);
+      window.serverGeneratedUserExperimentIdentifier = "<%- serverExperimentId %>";
+      window.isSEOBot = "<%- isSEOBot %>"
+      try {
+        window.initialUser = JSON.parse(`<%- JSON.stringify(mixclaimUser) %>`);
+      } catch {
+        window.initialUser = {}
+      }
+    </script>
+
+    <script src="<%- getBundle('appinsights.js') %>"></script>
+
+    <script defer src="/js/google-analytics.js"></script>
+    <script defer src="/js/puffHTTP.js"></script>
+    <script defer src="/js/mixcart-initial.js"></script>
+
+    <!-- Google Tag Manager -->
+    <script>
+      window.dataLayer = [];
+      window.gtmId = window.ENV?.GTM_ID ?? ''
+      if (window.pointOfSale !== 'US') {
+        window.gtmId = window.splitExperimentFlagsConfig['use-eu-gtm']?.GTM_ID ?? window.gtmId
+      }
+
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer', window.gtmId);
+    </script>
+    <!-- End Google Tag Manager -->
+
+    <link rel="preload" href="<%- getBundle('libraries.css') %>" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="<%- getBundle('index.css') %>" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="<%- getBundle('low-priority.css') %>" as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+    <script type="application/ld+json" id="script_schemajs">{"@context":"http://schema.org","@type":"Organization","name":"Gopuff","url":"https://gopuff.com","sameAs":["https://www.facebook.com/gopuff","https://twitter.com/gopuff","https://instagram.com/gopuff"]}</script>
+  </head>
+
+  <script>
+    <%- include('../public/js/l.min.js'); %>
+  </script>
+
+  <body onfocus="blur()">
+    <div
+      data-testid="scrollContainer"
+      id='scrollContainer'
+      class="<%= isSEOBot === false ? 'c-app impression-viewport' : 'c-app' %>"
+      onscroll="bodyScroll(this)"
+    >
+      <div
+        id="vueroot"
+        class='basediv c-app__vue-root'
+        v-bind:class="['c-app__' + gdevice_id, 'c-app__stage-' + stage, 'c-app__stage-' + stage + rootClass]">
+
+        <transition name='_slide' >
+          <div v-if='!loaded' id='loader' class="c-app__loader">
+            <% if (header) {%><h1><%- header %></h1><% } %>
+          </div>
+        </transition>
+
+        <template>
+          <gp-header v-if="stage !== 'product' && stage !== 'user' && !(stageDisplay.showNavHeader === false)"></gp-header>
+          <idfa-consent-modal v-if="window.gvueapp.idfaTreatment && window.gvueapp.idfaTreatment !== 'denied' && !window.gidfa"></idfa-consent-modal>
+          <notification-bar :key='stage'></notification-bar>
+          <shopping-banner-secondary></shopping-banner-secondary>
+          <venmo-promo-banner></venmo-promo-banner>
+          <div v-if="loaded && stage !== 'product'" mode="out-in" class="puffList puffPanel c-app__content-wrap">
+            <div class='centerSpacer'>
+            <seo-title></seo-title>
+              <div class='centralPanel c-app__content-container'>
+                <page-compile-frame :stage='stage'></page-compile-frame>
+                <page-shop v-if='stage === "shop" || stage === "search" || stage === "product"' ref='pageShop'></page-shop>
+                <page-categories v-if='stage === "categories"'></page-categories>
+                <page-fam v-if='stage === "fam"'></page-fam>
+                <page-redeem v-if='stage === "redeem"'></page-redeem>
+                <page-fam-cancellation-survey v-if="stage === 'fam-cancellation-survey'"></page-fam-cancellation-survey>
+                <page-checkout v-if="stage === 'checkout'"></page-checkout>
+                <page-id-doc v-if="stage === 'iddoc'"></page-id-doc>
+                <page-basket v-if="stage === 'basket'"></page-basket>
+                <page-tip v-if="stage === 'tip'"></page-tip>
+                <page-basket-suggestions v-if="stage === 'basket-suggestions'"></page-basket-suggestions>
+                <page-payments v-if='stage === "payment"'></page-payments>
+                <page-buy-it-again v-if="stage === 'buy-it-again'"></page-buy-it-again>
+                <page-recommendations v-if="stage === 'recommendations'"></page-recommendations>
+                <page-change-user v-if='stage === "change-user-phone" || stage === "change-user-email"'></page-change-user>
+                <page-change-language v-if='stage === "change-user-language"'></page-change-language>
+                <page-admin-pattern-library v-if='stage === "_ui"'></page-admin-pattern-library>
+              </div>
+              <seo-footer></seo-footer>
+            </div>
+          </div>
+        </template>
+        <page-base-product-info v-if="stage === 'product'"></page-base-product-info>
+        <footsie></footsie>
+        <flatbar v-cloak v-if="stageDisplay.showNavFooter !== false"></flatbar>
+        <pdp-promo-banner v-if="stage === 'product'"></pdp-promo-banner>
+        <chase-terms-overlay v-if="stage === 'payment'"></chase-terms-overlay>
+        <global-snackbar></global-snackbar>
+        <signup-snackbar></signup-snackbar>
+        <map-pick></map-pick>
+        <consent-manager></consent-manager>
+        <ttd-cookie-sync v-if="loaded && !gIsMobileApp && !isAppDataLoading && user.id"></ttd-cookie-sync>
+        <%- include('mixcart-components/add-credit-card-popup/add-credit-card-popup'); %>
+        <product-detail-warning-modal></product-detail-warning-modal>
+        <external-content></external-content>
+        <address-capture-modal></address-capture-modal>
+      </div>
+
+      <%- include('mixcart-components/notifications/notifications'); %>
+
+    <%- include('forter.ejs') %>
+
+    <%- include('mixins/global/experiments-mixin'); %>
+    <%- include('mixins/global/router-mixin'); %>
+
+    <%- include('mixins/business/address-mixin'); %>
+    <%- include('mixins/business/braze-mixin'); %>
+    <%- include('mixins/business/cart-mixin'); %>
+    <%- include('mixins/business/fam-mixin'); %>
+    <%- include('mixins/business/payment-mixin'); %>
+    <%- include('mixins/business/categories-mixin'); %>
+    <%- include('mixins/business/braintree-mixin'); %>
+    <%- include('mixins/business/alternative-pay-mixin'); %>
+    <%- include('mixins/business/checkout-delivery-details-mixin'); %>
+
+    <%- include('vue-components/seo-footer'); %>
+    <%- include('vue-components/seo-title'); %>
+    <%- include('vue-components/swiper-slide'); %>
+    <%- include('vue-components/swiper'); %>
+    <%- include('vue-components/map-pick'); %>
+
+    <%- include('vue-pages/page-compile-service'); %>
+
+    </div>
+  </body>
+
+  <script>
+    <%- include('../node_modules/@gopuff/viewport-watcher/lib/index.js'); %>
+    <%- include('../node_modules/@gopuff/domain-event/lib/index.js'); %>
+  </script>
+
+  <script defer src="/js/lazyload.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
+  <script defer src="/js/vue.min.js"></script>
+
+  <script defer src="<%- getBundle('libraries.js') %>"></script>
+  <script defer src="<%- getBundle('index.js') %>"></script>
+  <script defer src="<%- getBundle('app-ready.js') %>"></script>
+</html>

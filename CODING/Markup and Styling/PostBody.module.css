@@ -1,0 +1,22 @@
+.body {
+  margin: 30px auto 0;
+  max-width: 920px;
+}
+
+.title {
+  margin: 40px 0 20px;
+}
+
+.description {
+  color: var(--accent-color-info);
+  font-size: 14px;
+}
+
+.content p {
+  margin-bottom: 16px;
+}
+
+.content a {
+  color: var(--accent-color-indian-red);
+  text-decoration: underline;
+}

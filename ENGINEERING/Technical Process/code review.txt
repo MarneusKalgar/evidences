@@ -1,0 +1,6 @@
+https://github.com/katezolotarova/mist-next/pulls?page=1&q=is%3Apr+is%3Aclosed+reviewed-by%3A%40me
+
+https://github.com/katezolotarova/mist-next/pull/130
+https://github.com/katezolotarova/mist-next/pull/132
+
+https://github.com/katezolotarova/mist-next/pull/229/

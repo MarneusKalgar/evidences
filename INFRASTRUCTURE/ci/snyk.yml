@@ -1,0 +1,21 @@
+# Uses Snyk's official Github Action to run and upload results
+# https://github.com/snyk/actions/tree/master/node
+name: 'Snyk'
+on:
+  push:
+    branches:
+      - dev
+      - main
+      - 'release/**'
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: monitor
+          args: --severity-threshold=high --fail-on=upgradable --strict-out-of-sync=false
